@@ -153,14 +153,21 @@ let reverse = function(string) {
 // palindrome("rotor") // true
 // palindrome("wow") // true
 let palindrome = function(string) {
-
-  // if the length ofthe string is 1 return true;
-  // if the length of the string is 0 - return true;
-
-  // recursively take the first and last letter of the string and compare
-  //   if they're the same then return palindrome of the string without the first and last letters
-  //   if they're different then return false;
-
+  if (string.length === 1) {
+    return true;
+  }
+  if (string.length === 0) {
+    return true;
+  }
+  var temp = string.slice();
+  array = temp.split('');
+  var first = array.shift().toLowerCase();
+  var last = array.pop().toLowerCase();
+  if (first === last) {
+    return palindrome(array.join(''));
+  } else {
+    return false;
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
