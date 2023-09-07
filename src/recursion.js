@@ -2,38 +2,103 @@
 
 // Solve the following prompts using recursion.
 
+                            // ------------- DO 1 - 10, 23, 24!! ----------
+
 // 1. Calculate the factorial of a number. The factorial of a non-negative integer n,
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 let factorial = function(n) {
+  if (n === 0) {
+    return 1;
+  }
+  if (n < 0) {
+    return null;
+  }
+  return n * (factorial(n - 1));
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 let sum = function(array) {
+  // base case is if the array's length is zero
+  var working = array.slice();
+  if (working.length === 0) {
+    return 0;
+  }
+  return working.shift() + sum(working);
+
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 let arraySum = function(array) {
+  var sum = 0;
+  // if the input is not an array
+  if (!Array.isArray(array)) {
+    sum = array;
+  } else {
+    array.forEach(function(value) {
+      sum += arraySum(value);
+    })
+  }
+
+  return sum;
 };
 
 // 4. Check if a number is even.
 // isEven(2) // true
 // isEven(9) // false
 let isEven = function(n) {
+  n = Math.abs(n);
+  if (n === 1) {
+    return false;
+  }
+  if (n === 0) {
+    return true;
+  }
+  return isEven(n - 2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 let sumBelow = function(n) {
+  if (n < 0) {
+    n += 1;
+    return n + sumBelow(n);
+  } else if (n > 0){
+    n -= 1;
+    return n + sumBelow(n);
+  } else {
+    return n;
+  }
+
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 let range = function(x, y) {
+  var result = [];
+  if (x < y) {
+    if (x < (y - 1)) {
+      result.push(x + 1);
+      return result.concat(range(x + 1, y));
+    } else {
+      return result;
+    }
+  }
+  if (x > y) {
+    if (x > (y + 1)) {
+      result.push(x - 1);
+      return result.concat(range(x - 1, y));
+    } else {
+      return result;
+    }
+  }
+  if (x === y) {
+    return [];
+  }
 };
 
 // 7. Compute the exponent of a number.
@@ -42,6 +107,24 @@ let range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 let exponent = function(base, exp) {
+  if (exp === 0) {
+    return 1;
+  }
+  if (exp === 1) {
+    return base;
+  }
+  if (exp < 0) {
+    if (exp % 2 === 0) {
+      return 1 / exponent(base * base, exp / -2)
+    } else {
+      return exponent(base , exp - 1) * base;
+    }
+  }
+  if (exp % 2 === 0) {
+    return exponent(base * base, exp / 2)
+  } else {
+    return exponent(base , exp - 1) * base;
+  }
 };
 
 // 8. Determine if a number is a power of two.
@@ -49,10 +132,19 @@ let exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 let powerOfTwo = function(n) {
+  if (n > 1) {
+    return powerOfTwo(n / 2);
+  }
+  if (n === 1){
+   return true;
+  }
+  if (n < 1) {
+    return false;
+  }
 };
 
 // 9. Write a function that reverses a string.
-// reverse("hello"); // olleh 
+// reverse("hello"); // olleh
 let reverse = function(string) {
 };
 
@@ -61,6 +153,14 @@ let reverse = function(string) {
 // palindrome("rotor") // true
 // palindrome("wow") // true
 let palindrome = function(string) {
+
+  // if the length ofthe string is 1 return true;
+  // if the length of the string is 0 - return true;
+
+  // recursively take the first and last letter of the string and compare
+  //   if they're the same then return palindrome of the string without the first and last letters
+  //   if they're different then return false;
+
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
