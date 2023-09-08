@@ -146,6 +146,11 @@ let powerOfTwo = function(n) {
 // 9. Write a function that reverses a string.
 // reverse("hello"); // olleh
 let reverse = function(string) {
+  if (string === "") {
+    return "";
+  } else {
+      return reverse(string.slice(1)) + string.charAt(0);
+  }
 };
 
 // 10. Write a function that determines if a string is a palindrome.
@@ -245,15 +250,36 @@ let countKeysInObj = function(obj, key) {
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
-// let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
+let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 let countValuesInObj = function(obj, value) {
+  var count = 0;
+  for (var key in obj) {
+    var current = obj[key]
+    if (typeof(current) === 'object') {
+      count += countValuesInObj(current, value)
+    }
+    if (current == value) {
+      count++;
+    }
+  }
+  return count;
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 let replaceKeysInObj = function(obj, oldKey, newKey) {
+  for (var key in obj) {
+    if (key === oldKey) {
+      obj[newKey] = obj[oldKey];
+      delete obj[oldKey]
+    }
+    if (typeof(obj[key]) === 'object') {
+      replaceKeysInObj(obj[key], oldKey, newKey)
+    }
+  }
+  return obj;
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
